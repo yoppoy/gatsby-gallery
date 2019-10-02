@@ -1,0 +1,28 @@
+backend:
+  name: github
+  repo: yoppoy/gatsby-gallery
+media_folder: static/assets
+public_folder: assets
+collections:
+  - name: gallery
+    label: Gallery
+    folder: static/galleries
+    create: true
+    identifier_field: "city"
+    widget: "list"
+    fields:
+      - label: "City"
+        name: "city"
+      - label: "Images"
+        name: "images"
+        widget: "list"
+        fields:
+        - label: "Image"
+          name: "image"
+          widget: "image"
+          media_library:
+            config:
+              multiple: true
+      - label: "Location"
+        name: "location"
+        widget: "map"
