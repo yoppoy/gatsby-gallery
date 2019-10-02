@@ -1,5 +1,5 @@
 ---
-city: Scandinavia
+city: Shanghai
 images:
   - image: /assets/snow-1568840845947-1970.jpg
   - image: /assets/_dsc9633.jpg
