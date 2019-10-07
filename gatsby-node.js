@@ -41,6 +41,7 @@ exports.createPages = async ({graphql, actions, reporter}) => {
         }
         console.log(images);
         console.log("creating : ", url);
+        console.log("IMAGES => ", JSON.stringify(images));
         createPage({
             path: url,
             component: GalleryTemplate,

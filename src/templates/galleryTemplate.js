@@ -34,7 +34,7 @@ export default function GalleryTemplate({pageContext, data}) {
 
 export const pageQuery = graphql`
     query PageQuery($images: [String!]!) {
-        images: allFile(filter: {relativePath: {in: $images}}){
+        images: allFile(filter: {relativePath: {in: $images}}, orderBy: DESC){
             edges {
                 node {
                     name
