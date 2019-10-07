@@ -6,7 +6,12 @@ import SEO from "../components/seo"
 import {makeStyles} from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
-    container: {},
+    container: {
+        textAlign: 'center'
+    },
+    cardContainer: {
+        display: 'inline-block'
+    }
 }));
 
 const GalleriesPreview = () => {
@@ -19,7 +24,7 @@ const GalleriesPreview = () => {
             {edges.map(edge => {
                 const gallery = edge.node.frontmatter;
                 return (
-                    <div style={{display: 'inline-block'}}>
+                    <div className={classes.cardContainer}>
                         <GalleryCard key={gallery.city} gallery={gallery}/>
                     </div>
                 );
