@@ -52,7 +52,7 @@ export default function GalleryTemplate({pageContext, data}) {
     const lightboxImages = images.map(image => image.childImageSharp.fluid.src);
 
     return (
-        <Layout>
+        <Layout showPadder={false} style={{marginTop: 4, margin: 3}}>
             <SEO title={pageContext.city}/>
             <div className={classes.gridGallery}>
                 {images.map((image, index) => {
@@ -88,7 +88,7 @@ export const pageQuery = graphql`
                 node {
                     name
                     childImageSharp {
-                        sizes(maxWidth: 1000) {
+                        sizes(maxWidth: 1500) {
                             ...GatsbyImageSharpSizes
                         }
                         fluid(maxWidth: 3000, quality: 80) {
