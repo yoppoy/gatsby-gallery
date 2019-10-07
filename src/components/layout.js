@@ -31,7 +31,7 @@ const Layout = ({children, showPadder = true, style = {}}) => {
     return (
         <MuiThemeProvider theme={THEME}>
             <Header siteTitle={data.site.siteMetadata.title}/>
-            <div className={showPadder && classes.container} style={{...style}}>
+            <div className={showPadder ? classes.container : {}} style={{...style}}>
                 <main>{children}</main>
             </div>
         </MuiThemeProvider>

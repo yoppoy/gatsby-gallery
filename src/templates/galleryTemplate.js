@@ -4,39 +4,13 @@ import Layout from "../components/layout";
 import SEO from "../components/seo";
 import Img from "gatsby-image";
 import FsLightbox from 'fslightbox-react';
+import ImageGrid from '../components/Gallery/ImageGrid';
 import {makeStyles} from "@material-ui/core";
 
-const useStyles = makeStyles(theme => ({
-        container: {
-            display: "flex", flexDirection: "row"
-        },
-        gridGallery: {
-            display: "flex",
-            flexWrap: "wrap",
-            '&::after': {
-                content: '',
-                flexGrow: 999999999
-            }
-        },
-        gridImageContainer: {
-            position: "relative",
-            cursor: "pointer",
-            margin: 5,
-        },
-        gridPadder: {
-            display: "block"
-        },
-        gridImage: {
-            position: "absolute",
-            top: 0,
-            width: "100%",
-            verticalAlign: "bottom"
-        }
-    }
+const useStyles = makeStyles(theme => ({}
 ));
 
 export default function GalleryTemplate({pageContext, data}) {
-    const classes = useStyles();
     const [toggler, setToggler] = useState(false);
     const [imageIndex, setImageIndex] = useState(0);
     let images = [];
@@ -49,34 +23,24 @@ export default function GalleryTemplate({pageContext, data}) {
             }
         }
     });
-    const lightboxImages = images.map(image => image.childImageSharp.fluid.src);
+    const lightboxImages = images.map(image => {
+        console.log(image);
+        return image.childImageSharp.fluid.srcWebp
+    });
 
     return (
         <Layout showPadder={false} style={{marginTop: 4, margin: 3}}>
             <SEO title={pageContext.city}/>
-            <div className={classes.gridGallery}>
-                {images.map((image, index) => {
-                    console.log(image);
-                    let ratio = image.childImageSharp.sizes.aspectRatio;
-                    return (
-                        <div
-                            key={image.name} className={classes.gridImageContainer}
-                            style={{width: `${ratio * 400}px`, flexGrow: ratio * 400}}
-                            onClick={() => {
-                                console.log("Setting : ", index, !toggler);
-                                if (imageIndex !== index)
-                                    setImageIndex(index);
-                                setToggler(!toggler)
-                            }}>
-                            <Img className={classes.gridImage} sizes={image.childImageSharp.sizes}/>
-                        </div>);
-                })}
-                <FsLightbox
-                    toggler={toggler}
-                    sources={lightboxImages}
-                    slide={imageIndex + 1}
-                />
-            </div>
+            <ImageGrid images={images} onImageClick={(index) => {
+                if (imageIndex !== index)
+                    setImageIndex(index);
+                setToggler(!toggler)
+            }}/>
+            <FsLightbox
+                toggler={toggler}
+                sources={lightboxImages}
+                slide={imageIndex + 1}
+            />
         </Layout>
     );
 };
@@ -88,11 +52,11 @@ export const pageQuery = graphql`
                 node {
                     name
                     childImageSharp {
-                        sizes(maxWidth: 1500) {
-                            ...GatsbyImageSharpSizes
+                        sizes(maxWidth: 1500, quality: 80) {
+                            ...GatsbyImageSharpSizes_withWebp
                         }
                         fluid(maxWidth: 3000, quality: 80) {
-                            src
+                            ...GatsbyImageSharpFluid_withWebp_noBase64
                         }
                     }
                 }

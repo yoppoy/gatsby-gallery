@@ -13,7 +13,7 @@ const useStyles = makeStyles({
     card: {
         width: 345,
         margin: 15,
-        marginBottom: 0
+        marginBottom: 7
     },
     media: {
         height: 200,
