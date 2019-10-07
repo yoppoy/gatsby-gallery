@@ -9,6 +9,10 @@ exports.createPages = async ({graphql, actions, reporter}) => {
             node {
               frontmatter {
                 city
+                images {
+                  image
+                }
+                location
               }
             }
           }
@@ -18,17 +22,33 @@ exports.createPages = async ({graphql, actions, reporter}) => {
 
     if (result.errors) {
         reporter.panicOnBuild(`Error while running GraphQL query.`);
+        reporter.panicOnBuild(JSON.stringify(result.errors));
         return
     }
 
     const GalleryTemplate = path.resolve(`src/templates/galleryTemplate.js`);
     result.data.allMarkdownRemark.edges.forEach(({node}) => {
         const url = `/galleries/${node.frontmatter.city.toLowerCase()}`;
+        let images = [];
+
+        console.log("Rendering : ", node.frontmatter.city);
+        if (node.frontmatter && node.frontmatter.images) {
+            images = node.frontmatter.images.map(object => {
+                let image = object.image;
+                let posLastSlash = image.lastIndexOf('/') + 1;
+                return (image.substring(posLastSlash));
+            });
+        }
+        console.log(images);
         console.log("creating : ", url);
         createPage({
             path: url,
             component: GalleryTemplate,
-            context: {},
+            context: {
+                city: node.frontmatter.city,
+                images: images,
+                location: node.frontmatter.location
+            },
         })
     })
 };
