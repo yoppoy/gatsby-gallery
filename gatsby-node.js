@@ -31,7 +31,6 @@ exports.createPages = async ({graphql, actions, reporter}) => {
         const url = `/galleries/${node.frontmatter.city.toLowerCase()}`;
         let images = [];
 
-        console.log("Rendering : ", node.frontmatter.city);
         if (node.frontmatter && node.frontmatter.images) {
             images = node.frontmatter.images.map(object => {
                 let image = object.image;
@@ -39,9 +38,6 @@ exports.createPages = async ({graphql, actions, reporter}) => {
                 return (image.substring(posLastSlash));
             });
         }
-        console.log(images);
-        console.log("creating : ", url);
-        console.log("IMAGES => ", JSON.stringify(images));
         createPage({
             path: url,
             component: GalleryTemplate,

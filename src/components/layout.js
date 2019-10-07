@@ -8,7 +8,7 @@ import "./layout.css"
 const THEME = createMuiTheme({
 });
 
-const Layout = ({children}) => {
+const Layout = ({children, showPadder = true}) => {
     const data = useStaticQuery(graphql`
         query SiteTitleQuery {
             site {
@@ -23,8 +23,9 @@ const Layout = ({children}) => {
         <MuiThemeProvider theme={THEME}>
             <Header siteTitle={data.site.siteMetadata.title}/>
             <div
-                style={{
+                style={ showPadder && {
                     margin: `0 auto`,
+                    maxWidth: 1200,
                     padding: `0px 1.0875rem 1.45rem`,
                     paddingTop: 0,
                 }}
