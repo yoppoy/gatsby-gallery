@@ -43,7 +43,7 @@ export default ({images, onImageClick}) => {
                 return (
                     <div
                         key={image.name} className={classes.gridImageContainer}
-                        style={{width: `${ratio * 400}px`, flexGrow: ratio * 400}}
+                        style={{width: `${ratio * 350}px`, flexGrow: ratio * 350}}
                         onClick={() => onImageClick(index)}>
                         <Img className={classes.gridImage} sizes={image.childImageSharp.sizes}/>
                     </div>);

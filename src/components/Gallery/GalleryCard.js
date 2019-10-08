@@ -7,7 +7,8 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import {Link} from 'gatsby';
-import Thumbnail from "../../thumbnail";
+import {convertToKebabCase} from '../../lib/helpers';
+import Thumbnail from "../thumbnail";
 
 const useStyles = makeStyles({
     card: {
@@ -39,35 +40,11 @@ const useStyles = makeStyles({
     }
 });
 
-const queryAllImages = graphql`
-    query {
-        images: allFile(
-            filter: { extension: { regex: "/jpeg|jpg|png|gif/" } }
-        ) {
-            edges {
-                node {
-                    extension
-                    relativePath
-                    childImageSharp {
-                        fluid(maxWidth: 600) {
-                            ...GatsbyImageSharpFluid
-                        }
-                    }
-                }
-            }
-        }
-    }
-`;
-
 export default ({gallery}) => {
     const classes = useStyles();
-    const query = useStaticQuery(queryAllImages);
-    const background = gallery.images.length > 0 ? query.images.edges.find(edge => {
-        return gallery.images[0].image.includes(edge.node.relativePath);
-    }) : null;
 
     return (
-        <Link to={`/galleries/${gallery.city.toLowerCase()}`}>
+        <Link to={`/galleries/${convertToKebabCase(gallery.city)}`}>
             <Card className={classes.card}>
                 <CardActionArea>
                     <div className={classes.overlay}>
@@ -75,7 +52,7 @@ export default ({gallery}) => {
                     </div>
                     <CardMedia
                         className={classes.media}
-                        image={background.node.childImageSharp.fluid.src}
+                        image={gallery.imageFluid.src}
                         title="Contemplative Reptile"
                     />
                 </CardActionArea>
