@@ -4,9 +4,6 @@ const {createFilePath} = require(`gatsby-source-filesystem`);
 exports.onCreateNode = ({node, actions, getNode}) => {
     const {createNodeField} = actions;
 
-    if (node.internal.type === 'SitePage' && node.path === '/') {
-        console.log(node);
-    }
     if (node.internal.type === 'MarkdownRemark') {
         const slug = createFilePath({node, getNode, basePath: `galleries`, trailingSlash: false});
         let images = [];
@@ -61,7 +58,6 @@ exports.createPages = async ({graphql, actions, reporter}) => {
             }
         });
         galleries.data.allMarkdownRemark.edges.forEach(({node}) => {
-            console.log(node.fields);
             actions.createPage({
                 path: node.fields.slug,
                 component: path.resolve(`src/templates/galleryTemplate.js`),

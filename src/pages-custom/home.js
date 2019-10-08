@@ -1,5 +1,5 @@
 import React from "react";
-import {graphql, useStaticQuery} from "gatsby";
+import {graphql} from "gatsby";
 import GalleryCard from "../components/Gallery/GalleryCard";
 import Layout from "../components/layout"
 import SEO from "../components/seo"

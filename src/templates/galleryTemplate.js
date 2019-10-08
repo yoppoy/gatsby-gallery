@@ -2,16 +2,11 @@ import React, {useState} from "react";
 import {graphql} from "gatsby";
 import Layout from "../components/layout";
 import SEO from "../components/seo";
-import Img from "gatsby-image";
 import FsLightbox from 'fslightbox-react';
 import ImageGrid from '../components/Gallery/ImageGrid';
-import {makeStyles} from "@material-ui/core";
-
-const useStyles = makeStyles(theme => ({}
-));
 
 export default function GalleryTemplate({pageContext, data}) {
-    const [toggler, setToggler] = useState(false);
+    const [toggle, setToggle] = useState(false);
     const [imageIndex, setImageIndex] = useState(0);
     let images = [];
     data.images.edges.forEach((edge) => {
@@ -34,10 +29,10 @@ export default function GalleryTemplate({pageContext, data}) {
             <ImageGrid images={images} onImageClick={(index) => {
                 if (imageIndex !== index)
                     setImageIndex(index);
-                setToggler(!toggler)
+                setToggle(!toggle)
             }}/>
             <FsLightbox
-                toggler={toggler}
+                toggle={toggle}
                 sources={lightboxImages}
                 slide={imageIndex + 1}
             />
