@@ -17,12 +17,12 @@ const useStyles = makeStyles(theme => ({
 export default ({pageContext, data}) => {
     const classes = useStyles();
     const galleries = pageContext.galleries.map(gallery => {
-        let image = data.images.edges.find(edge => {
-            return gallery.preview.includes(edge.node.name)
-        });
+        let image = null;
+        if (gallery.preview)
+            image = data.images.edges.find(edge => gallery.preview.includes(edge.node.name));
         return ({
                 city: gallery.city,
-                imageFluid: image.node.childImageSharp.fluid
+                imageFluid: image ? image.node.childImageSharp.fluid : null
             }
         );
     });
@@ -44,7 +44,7 @@ export default ({pageContext, data}) => {
 };
 
 export const pageQuery = graphql`
-    query GalleryPreviews($previews: [String!]!) {
+    query GalleryPreviews($previews: [String]!) {
         images: allFile(filter: {relativePath: {in: $previews}}){
             edges {
                 node {

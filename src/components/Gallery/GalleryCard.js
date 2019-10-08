@@ -52,7 +52,7 @@ export default ({gallery}) => {
                     </div>
                     <CardMedia
                         className={classes.media}
-                        image={gallery.imageFluid.src}
+                        image={gallery.imageFluid ? gallery.imageFluid.src : null}
                         title="Contemplative Reptile"
                     />
                 </CardActionArea>
